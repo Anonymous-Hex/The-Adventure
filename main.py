@@ -1,4 +1,6 @@
 import random
+import os
+from turtle import clear
 
 class Player:
     def __init__(self, name, shield, health, damage, heal):
@@ -7,7 +9,7 @@ class Player:
         self.health = health
         self.damage = damage
         self.heal = heal
-
+ 
 class Opponent: 
     def __init__(self, name, shield, health, damage, heal):
         self.name = name
@@ -20,11 +22,12 @@ class Opponent:
 def battle(Player, Opponent):
 
     while Player.health and Opponent.health > 0:
-
+        print("")
         print(f"Your health: {Player.health} \n Opponent health: {Opponent.health}")
 
         enemy_move = random.randint(1,2)
         round_attack = int(input("Pick your move, \n 1 = Punch \n 2 = Heal \n-> "))
+        os.system('clear')
 
         if round_attack == 1:
             if enemy_move == 1:
