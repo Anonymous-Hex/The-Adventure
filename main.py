@@ -4,6 +4,69 @@ from turtle import clear
 import time
 import sys
 
+coins = 0
+
+#shop
+def changecharacter(): 
+    global coins
+    os.system('clear')
+    print("coins: $", coins)
+    chosen = int(input("you reach a tavern and you can change your character [name, shield, health, damage, heal] \n 1 = $500 Jack, 0, 100, 20, 10 \n 2 = $500 Billy, 0, 100, 10, 15 \n 3= $500 Wizas, 0, 75, 15, 20 \n or exit = 0 \n"))
+
+    if chosen == 1:
+        if coins < 500:
+            print("not enough coins")
+            time.sleep(1)
+            changecharacter()
+        else:
+            print("")
+            delay_print("you chose Jack")
+            player = Player("Jack", 0, 100, 20, 10)
+            coins -= 500
+            print("")
+            print("coins: $", coins)
+            time.sleep(2)
+        
+            
+
+    elif chosen == 2:
+        if coins < 500:
+            print("not enough coins")
+            time.sleep(1)
+            changecharacter()
+        else:
+            print("")
+            delay_print("you chose Billy")
+            player = Player("Billy", 0, 100, 10, 15)
+            coins -= 500
+            print("")
+            print("coins: $", coins)
+            time.sleep(2)
+
+    elif chosen ==  3:
+        if coins < 500:
+            print("not enough coins")
+            time.sleep(1)
+            changecharacter()           
+        else:
+            print("")
+            delay_print("you chose Wizas")
+            player = Player("Wizas", 0, 75, 15, 20)
+            coins -= 500
+            print("")
+            print("coins: $", coins)
+            time.sleep(2)
+    
+    elif chosen == 0:
+        print("exited")
+        time.sleep(3)
+    
+    else:
+        print("invalid input")
+        time.sleep(1)
+        changecharacter()
+    os.system('clear')
+
 def delay_print(s):
     for c in s:
         sys.stdout.write(c)
@@ -65,14 +128,25 @@ def battle(Player, Opponent):
     if Player.health <= 0:
         print("")
         delay_print ("You have been defeated, the game is over")
-    
+        print("")
+        retry = input("retry (Y/N)?")
+        if retry == "Y":
+            battle(Player, Opponent)
+        elif retry == "N":
+            exit
     elif Opponent.health <= 0:
         print("")
         delay_print ("You have won the match, moving on...")
-    
+        coins =+ 500
     elif Opponent.health and Player.health <= 0:
         print("")
         delay_print ("It's a draw, you have been defeated, the game is over")
+        print("")
+        retry = input("retry (Y/N)?")
+        if retry == "Y":
+            battle(Player, Opponent)
+        elif retry == "N":
+            exit
 
     
 #Beginning of the game 
@@ -117,10 +191,24 @@ if firstDir == 1:
     battle(player, opponent)
 
 elif firstDir == 2:
-    delay_print ("You turn towards the right, and are greeted by a monster standing right infront of you")
+    delay_print ("You turn towards the right, and are greeted by a monster standing right in front of you")
 
     battle(player, opponent)
 
 elif firstDir == 3:
     delay_print ("You go down the center")
+    print("")
     delay_print ("You walk over the bridge and continue on")
+    print("")
+    print("NOT!!")
+    delay_print ("you accidentally fall into the water and are attacked by a MONSTER")
+
+    battle(player, opponent)
+
+elif firstDir == 10:
+    print("continuing")
+    
+print("")
+delay_print("CONGRATULATIONS on completing your first battle")
+
+changecharacter()
